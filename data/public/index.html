@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light" data-lang="zh">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LemonFly AI服务 - 轻快起飞的 AI API 订阅服务</title>
+  <meta name="description" content="LemonFly AI服务为开发者提供 Claude / AI 模型接口调用、订阅套餐、按量付费、额度管理与稳定 API 接入能力。" />
+  <link rel="icon" type="image/png" sizes="80x80" href="https://qiniu.saas.lemonbus.cn/uPic/lemonfly_logo_80x80.png" />
+  <link rel="shortcut icon" href="https://qiniu.saas.lemonbus.cn/uPic/lemonfly_logo_80x80.png" />
+  <link rel="stylesheet" href="/lemonfly-home.css" />
+</head>
+
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#">
+        <img src="https://qiniu.saas.lemonbus.cn/uPic/lemonfly_logo_80x80.png" alt="LemonFly Logo">
+        <span>LemonFly</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#features"><span class="lang-zh">能力</span><span class="lang-en">Features</span></a>
+        <a href="#plans"><span class="lang-zh">订阅套餐</span><span class="lang-en">Plans</span></a>
+        <a href="#metered"><span class="lang-zh">按量付费</span><span class="lang-en">Pricing</span></a>
+        <a href="#faq"><span class="lang-zh">常见问题</span><span class="lang-en">FAQ</span></a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="nav-docs-btn" href="/docs" target="_top" title="文档">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5v-15A2.5 2.5 0 016.5 2H20v20H6.5a2.5 2.5 0 010-5H20"/>
+          </svg>
+        </a>
+
+        <div class="lang-dropdown">
+          <button class="lang-btn" id="langToggle" type="button" title="中文">
+            <span class="lang-flag" id="langFlag">🇨🇳</span>
+            <span class="lang-code" id="langCode">ZH</span>
+            <svg class="chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
+            </svg>
+          </button>
+        </div>
+
+        <button class="theme-btn" id="themeToggle" type="button" title="切换到深色模式" aria-label="切换深浅色">
+          <svg id="themeIconMoon" class="theme-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"></path>
+          </svg>
+          <svg id="themeIconSun" class="theme-icon hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"></path>
+          </svg>
+        </button>
+
+        <a class="btn btn-primary" id="authBtn" href="/login" target="_top">登录</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="badge">🍋 AI API Subscription Hub</span>
+          <h1>
+            <span class="gradient-text lang-zh">轻快起飞的 AI API 订阅服务</span>
+            <span class="gradient-text lang-en">Fast AI API subscriptions, ready to fly</span>
+          </h1>
+          <p class="lead">
+            <span class="lang-zh">LemonFly AI服务为开发者提供稳定的模型接口调用、套餐订阅、额度管理与按量付费能力。适合日常开发、AI 编程、自动化任务、产品集成与团队使用。</span>
+            <span class="lang-en">LemonFly provides stable model API access, subscriptions, quota management, and pay-as-you-go billing for developers, automation workflows, and teams.</span>
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#plans"><span class="lang-zh">查看套餐</span><span class="lang-en">View Plans</span></a>
+            <a class="btn btn-secondary" href="#metered"><span class="lang-zh">查看按量价格</span><span class="lang-en">Usage Pricing</span></a>
+          </div>
+
+          <div class="stats">
+            <div class="stat"><b>30 天</b><span class="lang-zh">套餐有效期</span><span class="lang-en">Plan period</span></div>
+            <div class="stat"><b>Claude</b><span class="lang-zh">主流模型支持</span><span class="lang-en">Model support</span></div>
+            <div class="stat"><b>API</b><span class="lang-zh">快速接入调用</span><span class="lang-en">Quick access</span></div>
+          </div>
+        </div>
+
+        <div class="visual">
+          <div class="hero-card">
+            <img class="hero-logo" src="https://qiniu.saas.lemonbus.cn/uPic/Lfly.png" alt="LemonFly flying lemon logo">
+            <h3>Fast & Simple AI API Gateway</h3>
+            <p style="color:var(--muted);line-height:1.7;margin:8px 0 0;">
+              <span class="lang-zh">一站式管理订阅、额度、模型调用与账单。</span>
+              <span class="lang-en">Manage plans, quotas, API calls, and billing in one place.</span>
+            </p>
+            <div class="mini-panel">
+              <div><b>$20 起</b><span class="lang-zh">日额度</span><span class="lang-en">Daily quota</span></div>
+              <div><b>×1</b><span class="lang-zh">套餐倍率</span><span class="lang-en">Multiplier</span></div>
+              <div><b>Opus</b><span class="lang-zh">高阶模型</span><span class="lang-en">Advanced model</span></div>
+              <div><b>Sonnet</b><span class="lang-zh">日常开发</span><span class="lang-en">Daily coding</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Why LemonFly</span>
+          <h2><span class="lang-zh">为 AI 开发和自动化任务准备</span><span class="lang-en">Built for AI coding and automation</span></h2>
+          <p class="section-desc">
+            <span class="lang-zh">从个人开发到团队协作，LemonFly 帮你把模型调用、套餐额度和成本控制放到一个清晰的入口里。</span>
+            <span class="lang-en">From personal projects to team workflows, LemonFly keeps model access, quotas, and costs clear.</span>
+          </p>
+        </div>
+
+        <div class="features">
+          <div class="feature"><div class="icon">⚡</div><h3>快速接入</h3><p>面向开发者的 API 服务，适合接入 Claude Code、OpenAI Codex、自动化脚本与业务系统。</p></div>
+          <div class="feature"><div class="icon">📊</div><h3>额度清晰</h3><p>支持日限额、周限额、月限额配置，便于控制团队和个人使用成本。</p></div>
+          <div class="feature"><div class="icon">🧩</div><h3>多模型选择</h3><p>支持不同 Claude 模型组合，根据任务复杂度选择更合适的模型能力。</p></div>
+          <div class="feature"><div class="icon">💳</div><h3>灵活付费</h3><p>既可以选择固定套餐，也可以按照模型调用量进行按量付费。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="plans">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Subscription Plans</span>
+          <h2><span class="lang-zh">订阅套餐</span><span class="lang-en">Subscription Plans</span></h2>
+          <p class="section-desc">
+            <span class="lang-zh">按月开通，适合不同强度的 AI 编程、日常开发和团队协作场景。</span>
+            <span class="lang-en">Monthly plans for different levels of AI coding, daily development, and team usage.</span>
+          </p>
+        </div>
+
+        <div class="pricing">
+          <article class="price-card">
+            <h3>入门 Starter <span class="tag">Anthropic</span></h3>
+            <p style="color:var(--muted);line-height:1.65;margin:0;">支持 Claude 和 ChatGPT 所有模型，包括 Opus 4.7 和 GPT 系列。</p>
+            <div class="price"><small>¥</small><strong>199</strong><span>/ 30天</span></div>
+            <div class="old-price">原价 ¥299，当前约 -33%</div>
+            <div class="quota">
+              <div>倍率 <b>×1</b></div><div>日限额 <b>$20</b></div>
+              <div>周限额 <b>$90</b></div><div>月限额 <b>$300</b></div>
+            </div>
+            <ul class="list">
+              <li>拥有最顶级的编程智能体 Claude Code、OpenAI Codex。</li>
+              <li>程序员强大的模型，满足日常开发需求。</li>
+              <li>适合每天需求约 2–3 小时的开发使用。</li>
+            </ul>
+            <a class="btn btn-primary" href="/dashboard/pricing" target="_top">立即开通</a>
+          </article>
+
+          <article class="price-card highlight">
+            <h3>标准 PRO <span class="tag">Anthropic</span></h3>
+            <p style="color:var(--muted);line-height:1.65;margin:0;">支持 Claude 所有模型，包括 Opus 4.8。</p>
+            <div class="price"><small>¥</small><strong>799</strong><span>/ 30天</span></div>
+            <div class="old-price">原价 ¥899，当前约 -11%</div>
+            <div class="quota">
+              <div>倍率 <b>×1</b></div><div>日限额 <b>$60</b></div>
+              <div>周限额 <b>$300</b></div><div>月限额 <b>$1100</b></div>
+            </div>
+            <ul class="list">
+              <li>拥有最顶级的编程智能体 Claude Code。</li>
+              <li>畅享最强大的模型，满足 95% 程序员的开发工作。</li>
+              <li>适合每天需求约 5–7 小时的开发使用。</li>
+            </ul>
+            <a class="btn btn-primary" href="/dashboard/pricing" target="_top">立即开通</a>
+          </article>
+
+          <article class="price-card">
+            <h3>专业 MAX <span class="tag">Anthropic</span></h3>
+            <p style="color:var(--muted);line-height:1.65;margin:0;">支持 Claude 所有模型，包括 Opus 4.7 和 Opus 4.8。</p>
+            <div class="price"><small>¥</small><strong>2099</strong><span>/ 30天</span></div>
+            <div class="old-price">原价 ¥2199，当前约 -5%</div>
+            <div class="quota">
+              <div>倍率 <b>×1</b></div><div>日限额 <b>$150</b></div>
+              <div>周限额 <b>$700</b></div><div>月限额 <b>$2600</b></div>
+            </div>
+            <ul class="list">
+              <li>适合高强度使用，拥有顶级编程智能体。</li>
+              <li>Claude Code、AI 任务、复杂项目开发更从容。</li>
+              <li>适合超级个体或企业技术支持优先级使用。</li>
+            </ul>
+            <a class="btn btn-primary" href="/purchase" target="_top">立即开通</a>
+          </article>
+        </div>
+
+        <div class="note">说明：套餐内容以实际开通页面为准。不同模型、供应商和服务策略可能会根据平台资源情况调整。</div>
+      </div>
+    </section>
+
+    <section id="metered">
+      <div class="container">
+        <div class="metered">
+          <div class="metered-head">
+            <div>
+              <span class="eyebrow">Pay as you go</span>
+              <h2>按量付费价格</h2>
+              <p class="section-desc">适合偶尔使用、弹性调用或需要精细化成本控制的用户。以下价格单位为每百万 token，格式为输入 / 输出。</p>
+            </div>
+            <a class="btn btn-primary" href="/purchase" target="_top">充值使用</a>
+          </div>
+
+          <table class="rate-table">
+            <thead><tr><th>模型</th><th>输入价格</th><th>输出价格</th><th>计费单位</th></tr></thead>
+            <tbody>
+              <tr><td class="model-opus48">Opus 4.8</td><td>$15</td><td>$75</td><td><small>每百万 token</small></td></tr>
+              <tr><td class="model-sonnet">Sonnet 4.6</td><td>$3</td><td>$15</td><td><small>每百万 token</small></td></tr>
+              <tr><td class="model-sonnet">Sonnet 4.6（1M）</td><td>$3</td><td>$15</td><td><small>每百万 token</small></td></tr>
+              <tr><td class="model-opus46">Opus 4.6</td><td>$5</td><td>$25</td><td><small>每百万 token</small></td></tr>
+              <tr><td class="model-opus46">Opus 4.6（1M）</td><td>$5</td><td>$25</td><td><small>每百万 token</small></td></tr>
+              <tr><td class="model-haiku">Haiku 4.5</td><td>$1</td><td>$5</td><td><small>每百万 token</small></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head"><span class="eyebrow">How it works</span><h2>三步开始使用</h2></div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><h3>选择套餐</h3><p>根据你的开发强度选择 Starter、PRO 或 MAX，也可以先按量充值试用。</p></div>
+          <div class="step"><div class="step-num">2</div><h3>开通额度</h3><p>完成支付后获得对应额度与模型权限，可在后台查看剩余额度和使用情况。</p></div>
+          <div class="step"><div class="step-num">3</div><h3>接入 API</h3><p>复制访问凭证，在 Claude Code、Codex、脚本或你的业务系统里完成配置。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="container">
+        <div class="section-head"><span class="eyebrow">FAQ</span><h2>常见问题</h2></div>
+        <div class="faq">
+          <div class="qa"><h3>套餐和按量付费有什么区别？</h3><p>套餐适合稳定高频使用，按量付费适合低频、临时或需要弹性控制成本的场景。</p></div>
+          <div class="qa"><h3>适合 Claude Code 使用吗？</h3><p>适合。套餐说明里已经覆盖编程智能体和日常开发场景，具体模型可用情况以后台显示为准。</p></div>
+          <div class="qa"><h3>额度会自动重置吗？</h3><p>套餐包含日限额、周限额和月限额。不同规则的重置方式以实际后台配置为准。</p></div>
+          <div class="qa"><h3>企业或团队能使用吗？</h3><p>可以。MAX 更适合高强度开发、团队协作、复杂任务和企业技术支持场景。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="cta">
+          <h2>让你的 AI 开发工作流轻快起飞</h2>
+          <p>从日常编码、项目重构到长任务自动化，LemonFly 帮你用更清晰的套餐和额度管理接入强大的 AI 模型能力。</p>
+          <a class="btn btn-primary" href="/purchase" target="_top">立即选择套餐</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="container">© 2026 LemonFly AI服务. All rights reserved.</div></footer>
+
+  <script src="/lemonfly-home.js" defer></script>
+</body>
+</html>

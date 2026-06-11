@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LemonFly 文档</title>
+  <meta name="description" content="LemonFly AI API 订阅服务使用文档" />
+  <link rel="icon" type="image/png" sizes="80x80" href="https://qiniu.saas.lemonbus.cn/uPic/lemonfly_logo_80x80.png" />
+  <style>
+    :root {
+      --bg: #ffffff; --bg-secondary: #f9fafb; --text: #1f2937; --muted: #6b7280;
+      --border: #e5e7eb; --orange: #ff6b12; --orange-light: #fff8f1;
+      --code-bg: #f3f4f6; --sidebar-bg: #fafafa; --card-bg: #ffffff;
+      --shadow: 0 1px 3px rgba(0,0,0,.08);
+    }
+    html[data-theme="dark"] {
+      --bg: #0f172a; --bg-secondary: #1e293b; --text: #f1f5f9; --muted: #94a3b8;
+      --border: #334155; --orange-light: rgba(255,107,18,.1);
+      --code-bg: #1e293b; --sidebar-bg: #0f172a; --card-bg: #1e293b;
+      --shadow: 0 1px 3px rgba(0,0,0,.3);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+
+    /* Header */
+    .header { position: sticky; top: 0; z-index: 50; background: var(--bg); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); }
+    .header-inner { max-width: 1280px; margin: 0 auto; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .header-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 800; font-size: 18px; }
+    .header-brand img { width: 28px; height: 28px; border-radius: 6px; }
+    .header-nav { display: flex; align-items: center; gap: 20px; }
+    .header-nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .15s; }
+    .header-nav a:hover, .header-nav a.active { color: var(--orange); }
+    .header-right { display: flex; align-items: center; gap: 8px; }
+    .icon-btn { width: 36px; height: 36px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); cursor: pointer; display: grid; place-items: center; transition: background .15s, color .15s; }
+    .icon-btn:hover { background: var(--bg-secondary); color: var(--text); }
+    .back-link { display: flex; align-items: center; gap: 4px; color: var(--muted); text-decoration: none; font-size: 13px; padding: 6px 10px; border-radius: 8px; transition: background .15s, color .15s; }
+    .back-link:hover { background: var(--bg-secondary); color: var(--orange); }
+
+    /* Layout */
+    .layout { display: flex; max-width: 1280px; margin: 0 auto; min-height: calc(100vh - 56px); }
+
+    /* Sidebar */
+    .sidebar { width: 260px; flex-shrink: 0; border-right: 1px solid var(--border); padding: 24px 0; position: sticky; top: 56px; height: calc(100vh - 56px); overflow-y: auto; }
+    .sidebar-group { margin-bottom: 8px; }
+    .sidebar-group-title { padding: 6px 24px; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+    .sidebar-link { display: block; padding: 6px 24px; color: var(--muted); text-decoration: none; font-size: 14px; border-left: 3px solid transparent; transition: all .15s; }
+    .sidebar-link:hover { color: var(--text); background: var(--bg-secondary); }
+    .sidebar-link.active { color: var(--orange); border-left-color: var(--orange); background: var(--orange-light); font-weight: 600; }
+
+    /* Main content */
+    .main { flex: 1; min-width: 0; padding: 32px 48px 80px; max-width: 860px; }
+    .main h1 { font-size: 32px; font-weight: 800; margin-bottom: 8px; letter-spacing: -.02em; }
+    .main h2 { font-size: 24px; font-weight: 700; margin: 40px 0 16px; padding-top: 24px; border-top: 1px solid var(--border); letter-spacing: -.01em; }
+    .main h2:first-of-type { border-top: 0; padding-top: 0; }
+    .main h3 { font-size: 18px; font-weight: 700; margin: 28px 0 12px; }
+    .main p { margin: 0 0 16px; color: var(--text); }
+    .main ul, .main ol { margin: 0 0 16px; padding-left: 24px; }
+    .main li { margin-bottom: 6px; color: var(--text); }
+    .main a { color: var(--orange); text-decoration: none; }
+    .main a:hover { text-decoration: underline; }
+    .main strong { font-weight: 700; }
+    .main code { background: var(--code-bg); padding: 2px 6px; border-radius: 4px; font-size: 13px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .main pre { background: var(--code-bg); border-radius: 8px; padding: 16px; overflow-x: auto; margin: 0 0 16px; }
+    .main pre code { background: none; padding: 0; font-size: 13px; }
+
+    /* Cards */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin: 16px 0 24px; }
+    .card { padding: 20px; border-radius: 12px; border: 1px solid var(--border); background: var(--card-bg); box-shadow: var(--shadow); }
+    .card h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .card p { font-size: 14px; color: var(--muted); margin: 0; }
+
+    /* Tips */
+    .tip { padding: 16px 20px; border-radius: 8px; background: var(--orange-light); border-left: 4px solid var(--orange); margin: 0 0 16px; }
+    .tip-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; color: var(--orange); }
+    .tip p { margin: 0; font-size: 14px; }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin: 0 0 16px; font-size: 14px; }
+    th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+    th { font-weight: 700; color: var(--muted); font-size: 13px; }
+
+    /* Section */
+    .section { display: none; }
+    .section.active { display: block; }
+
+    /* Mobile */
+    .sidebar-toggle { display: none; }
+    .overlay { display: none; }
+
+    @media (max-width: 768px) {
+      .sidebar { position: fixed; left: -280px; top: 56px; z-index: 40; background: var(--bg); transition: left .25s; width: 280px; }
+      .sidebar.open { left: 0; }
+      .overlay { display: none; position: fixed; inset: 0; top: 56px; background: rgba(0,0,0,.3); z-index: 35; }
+      .overlay.open { display: block; }
+      .sidebar-toggle { display: grid; }
+      .main { padding: 24px 20px 60px; }
+      .header-nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a class="header-brand" href="/">
+        <img src="https://qiniu.saas.lemonbus.cn/uPic/lemonfly_logo_80x80.png" alt="LemonFly">
+        <span>LemonFly</span>
+      </a>
+      <nav class="header-nav">
+        <a href="/docs" class="active">文档</a>
+        <a href="/#plans">套餐</a>
+        <a href="/#faq">FAQ</a>
+      </nav>
+    </div>
+    <div class="header-right">
+      <button class="icon-btn sidebar-toggle" onclick="toggleSidebar()" aria-label="菜单">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+      <button class="icon-btn" onclick="toggleTheme()" aria-label="深色模式">
+        <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+      <a class="back-link" href="/login" target="_top">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+        控制台
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <div class="overlay" onclick="toggleSidebar()"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">新手必读</div>
+      <a class="sidebar-link active" data-section="overview" onclick="showSection('overview')">概览</a>
+      <a class="sidebar-link" data-section="quickstart" onclick="showSection('quickstart')">5 分钟接入指南</a>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">客户端接入</div>
+      <a class="sidebar-link" data-section="claude-code" onclick="showSection('claude-code')">Claude Code</a>
+      <a class="sidebar-link" data-section="codex-cli" onclick="showSection('codex-cli')">Codex CLI</a>
+      <a class="sidebar-link" data-section="openai-sdk" onclick="showSection('openai-sdk')">OpenAI SDK</a>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">使用指南</div>
+      <a class="sidebar-link" data-section="billing" onclick="showSection('billing')">计费与订阅</a>
+      <a class="sidebar-link" data-section="api-ref" onclick="showSection('api-ref')">API 基础参考</a>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">遇到问题</div>
+      <a class="sidebar-link" data-section="troubleshooting" onclick="showSection('troubleshooting')">错误排查</a>
+      <a class="sidebar-link" data-section="faq" onclick="showSection('faq')">FAQ</a>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- 概览 -->
+    <div class="section active" id="sec-overview">
+      <h1>LemonFly 文档</h1>
+      <p>一个 API Key，接入 Claude 和 GPT 等主流 AI 模型。LemonFly 为你提供稳定的 API 中转、订阅套餐、额度管理与按量付费能力。</p>
+      <div class="tip">
+        <div class="tip-title">开始使用</div>
+        <p>第一次接入：<a href="#" onclick="showSection('quickstart');return false">5 分钟接入指南</a> &nbsp;|&nbsp; 已有 Key：<a href="#" onclick="showSection('claude-code');return false">客户端接入</a> &nbsp;|&nbsp; <a href="/" target="_top">返回控制台</a></p>
+      </div>
+
+      <h2>LemonFly 是什么</h2>
+      <p>LemonFly 是一个 <strong>AI API 订阅服务平台</strong>，让你用一个 API Key 就能调用 Claude、GPT 等多种模型。平台负责账号管理、智能调度、负载均衡和计费，你只需关注开发。</p>
+      <ul>
+        <li><strong>多模型统一接入</strong> — 一个 Key 调用 Claude Sonnet/Opus、GPT 系列等主流模型</li>
+        <li><strong>智能调度</strong> — 自动选择最优账号，支持粘性会话和故障转移</li>
+        <li><strong>灵活计费</strong> — 订阅套餐 + 按量付费两种模式，按 Key 控额度</li>
+      </ul>
+
+      <h2>核心能力</h2>
+      <div class="card-grid">
+        <div class="card"><h4>🔑 一个 Key 通用</h4><p>同一个 API Key 可调用多种模型，无需为每家上游分别注册账号</p></div>
+        <div class="card"><h4>📊 精准计费</h4><p>Token 级别用量追踪，日限额 / 周限额 / 月限额精细控制</p></div>
+        <div class="card"><h4>⚡ 智能调度</h4><p>自动选择最优账号，支持粘性会话，保证连续对话体验</p></div>
+        <div class="card"><h4>🛡️ 并发控制</h4><p>按用户和账号限制并发数，防止资源滥用</p></div>
+      </div>
+
+      <h2>适合谁用</h2>
+      <ul>
+        <li>想用 <strong>Claude Code / Codex CLI</strong> 但不想分别开 Anthropic、OpenAI 账户</li>
+        <li>团队共用 AI 巜具，希望<strong>统一计费、按 Key 控额度</strong></li>
+        <li>需要稳定的 API 中转服务，避免网络不稳定问题</li>
+      </ul>
+    </div>
+
+    <!-- 快速开始 -->
+    <div class="section" id="sec-quickstart">
+      <h1>5 分钟接入指南</h1>
+      <p>从注册到第一次 API 调用，只需 5 分钟。</p>
+
+      <h2>第 1 步：注册账号</h2>
+      <p>访问 <a href="/register" target="_top">注册页面</a>，使用邮箱注册。</p>
+
+      <h2>第 2 步：选择套餐或充值</h2>
+      <p>进入 <a href="/dashboard/pricing" target="_top">定价页面</a>，选择适合你的套餐：</p>
+      <table>
+        <tr><th>套餐</th><th>价格</th><th>日限额</th><th>适合场景</th></tr>
+        <tr><td>入门 Starter</td><td>¥199/30天</td><td>$20</td><td>每天 2-3 小时开发</td></tr>
+        <tr><td>标准 PRO</td><td>¥799/30天</td><td>$60</td><td>每天 5-7 小时开发</td></tr>
+        <tr><td>专业 MAX</td><td>¥2099/30天</td><td>$150</td><td>高强度 / 团队使用</td></tr>
+      </table>
+      <p>也可以选择<strong>按量充值</strong>，按实际用量扣费。</p>
+
+      <h2>第 3 步：创建 API Key</h2>
+      <p>进入 <a href="/dashboard" target="_top">控制台</a> → API Keys → 创建新 Key。复制保存，后续接入使用。</p>
+
+      <h2>第 4 步：配置客户端</h2>
+      <p>根据你使用的工具，选择对应的接入方式：</p>
+      <div class="card-grid">
+        <div class="card"><h4>Claude Code</h4><p>修改 Base URL 和 API Key 即可</p></div>
+        <div class="card"><h4>Codex CLI</h4><p>设置环境变量即可</p></div>
+        <div class="card"><h4>OpenAI SDK</h4><p>Python / Node.js SDK 直接兼容</p></div>
+      </div>
+
+      <h2>验证连接</h2>
+      <p>用 curl 测试：</p>
+      <pre><code>curl https://你的域名/v1/chat/completions \
+  -H "Authorization: Bearer sk-你的key" \
+  -d '{"model":"claude-sonnet-4-20250514","messages":[{"role":"user","content":"Hi"}]}'</code></pre>
+    </div>
+
+    <!-- Claude Code -->
+    <div class="section" id="sec-claude-code">
+      <h1>Claude Code 接入</h1>
+      <p>Claude Code 是 Anthropic 官方的 AI 编程工具。通过 LemonFly 接入，只需修改两个配置。</p>
+
+      <h2>配置方式</h2>
+      <p>在终端中设置环境变量：</p>
+      <pre><code>export ANTHROPIC_BASE_URL="https://你的域名"
+export ANTHROPIC_API_KEY="sk-你的key"</code></pre>
+      <p>或者在 <code>~/.bashrc</code> / <code>~/.zshrc</code> 中持久化。</p>
+
+      <h2>验证</h2>
+      <pre><code>claude "Hello, 你好"</code></pre>
+      <p>如果正常返回响应，说明接入成功。</p>
+
+      <h2>可用模型</h2>
+      <table>
+        <tr><th>模型</th><th>说明</th><th>输入价格</th><th>输出价格</th></tr>
+        <tr><td>claude-sonnet-4-20250514</td><td>日常开发首选</td><td>$3/M</td><td>$15/M</td></tr>
+        <tr><td>claude-opus-4-20250514</td><td>复杂任务</td><td>$15/M</td><td>$75/M</td></tr>
+        <tr><td>claude-haiku-4-20250514</td><td>快速响应</td><td>$1/M</td><td>$5/M</td></tr>
+      </table>
+    </div>
+
+    <!-- Codex CLI -->
+    <div class="section" id="sec-codex-cli">
+      <h1>Codex CLI 接入</h1>
+      <p>OpenAI Codex CLI 是 OpenAI 的命令行编程工具。</p>
+
+      <h2>配置方式</h2>
+      <pre><code>export OPENAI_BASE_URL="https://你的域名/v1"
+export OPENAI_API_KEY="sk-你的key"</code></pre>
+
+      <h2>验证</h2>
+      <pre><code>codex "Hello, 你好"</code></pre>
+    </div>
+
+    <!-- OpenAI SDK -->
+    <div class="section" id="sec-openai-sdk">
+      <h1>OpenAI SDK 接入</h1>
+      <p>LemonFly 兼容 OpenAI API 格式，可直接使用 OpenAI 官方 SDK。</p>
+
+      <h2>Python</h2>
+      <pre><code>from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://你的域名/v1",
+    api_key="sk-你的key"
+)
+
+response = client.chat.completions.create(
+    model="claude-sonnet-4-20250514",
+    messages=[{"role": "user", "content": "Hello!"}]
+)
+print(response.choices[0].message.content)</code></pre>
+
+      <h2>Node.js</h2>
+      <pre><code>import OpenAI from 'openai';
+
+const client = new OpenAI({
+    baseURL: 'https://你的域名/v1',
+    apiKey: 'sk-你的key'
+});
+
+const response = await client.chat.completions.create({
+    model: 'claude-sonnet-4-20250514',
+    messages: [{ role: 'user', content: 'Hello!' }]
+});
+console.log(response.choices[0].message.content);</code></pre>
+    </div>
+
+    <!-- 计费说明 -->
+    <div class="section" id="sec-billing">
+      <h1>计费与订阅</h1>
+
+      <h2>两种计费模式</h2>
+      <table>
+        <tr><th>模式</th><th>说明</th><th>适合场景</th></tr>
+        <tr><td><strong>订阅套餐</strong></td><td>按月付费，含日/周/月限额</td><td>稳定高频使用</td></tr>
+        <tr><td><strong>按量充值</strong></td><td>按实际 Token 用量扣费</td><td>偶尔使用、弹性调用</td></tr>
+      </table>
+
+      <h2>按量付费价格</h2>
+      <table>
+        <tr><th>模型</th><th>输入</th><th>输出</th></tr>
+        <tr><td>Opus 4.8</td><td>$15/M</td><td>$75/M</td></tr>
+        <tr><td>Sonnet 4.6</td><td>$3/M</td><td>$15/M</td></tr>
+        <tr><td>Opus 4.6</td><td>$5/M</td><td>$25/M</td></tr>
+        <tr><td>Haiku 4.5</td><td>$1/M</td><td>$5/M</td></tr>
+      </table>
+      <p>价格单位：每百万 Token (USD)。</p>
+
+      <h2>额度重置规则</h2>
+      <ul>
+        <li><strong>日限额</strong>：每天 00:00 (UTC+8) 重置</li>
+        <li><strong>周限额</strong>：每周一 00:00 (UTC+8) 重置</li>
+        <li><strong>月限额</strong>：每月 1 日 00:00 (UTC+8) 重置</li>
+      </ul>
+    </div>
+
+    <!-- API 基础参考 -->
+    <div class="section" id="sec-api-ref">
+      <h1>API 基础参考</h1>
+      <p>LemonFly 兼容 OpenAI API 格式，支持以下端点：</p>
+
+      <h2>基础信息</h2>
+      <table>
+        <tr><th>项目</th><th>说明</th></tr>
+        <tr><td>API 入口</td><td><code>https://你的域名/v1</code></td></tr>
+        <tr><td>鉴权方式</td><td><code>Authorization: Bearer YOUR_API_KEY</code></td></tr>
+        <tr><td>格式</td><td>OpenAI 兼容 (JSON)</td></tr>
+      </table>
+
+      <h2>支持的端点</h2>
+      <table>
+        <tr><th>端点</th><th>方法</th><th>说明</th></tr>
+        <tr><td><code>/v1/chat/completions</code></td><td>POST</td><td>Chat 对话</td></tr>
+        <tr><td><code>/v1/messages</code></td><td>POST</td><td>Claude 原生格式</td></tr>
+        <tr><td><code>/v1/models</code></td><td>GET</td><td>列出可用模型</td></tr>
+        <tr><td><code>/v1/images/generations</code></td><td>POST</td><td>图片生成</td></tr>
+      </table>
+
+      <h2>请求示例</h2>
+      <pre><code>curl https://你的域名/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer sk-你的key" \
+  -d '{
+    "model": "claude-sonnet-4-20250514",
+    "messages": [
+      {"role": "user", "content": "你好"}
+    ],
+    "stream": true
+  }'</code></pre>
+    </div>
+
+    <!-- 错误排查 -->
+    <div class="section" id="sec-troubleshooting">
+      <h1>错误排查</h1>
+
+      <h2>401 Unauthorized</h2>
+      <p>API Key 无效或已过期。检查：</p>
+      <ul>
+        <li>Key 是否正确复制（以 <code>sk-</code> 开头）</li>
+        <li>Key 是否已过期或被禁用</li>
+        <li>Header 格式是否正确：<code>Authorization: Bearer sk-xxx</code></li>
+      </ul>
+
+      <h2>403 Forbidden</h2>
+      <p>权限不足。检查：</p>
+      <ul>
+        <li>Key 绑定的分组是否包含目标模型</li>
+        <li>账号是否被禁用</li>
+      </ul>
+
+      <h2>429 Too Many Requests</h2>
+      <p>请求频率超限。检查：</p>
+      <ul>
+        <li>是否超出并发限制</li>
+        <li>是否超出日限额 / 周限额 / 月限额</li>
+        <li>稍等片刻后重试</li>
+      </ul>
+
+      <h2>502 / 503 服务不可用</h2>
+      <p>上游服务暂时不可用。平台会自动重试其他账号，如果持续出现请联系管理员。</p>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section" id="sec-faq">
+      <h1>常见问题</h1>
+
+      <h2>套餐和按量付费有什么区别？</h2>
+      <p>套餐适合稳定高频使用，包含日/周/月限额；按量付费适合低频、临时或需要弹性控制成本的场景。</p>
+
+      <h2>适合 Claude Code 使用吗？</h2>
+      <p>完全适合。只需设置 <code>ANTHROPIC_BASE_URL</code> 和 <code>ANTHROPIC_API_KEY</code> 环境变量即可。</p>
+
+      <h2>额度会自动重置吗？</h2>
+      <p>是的。日限额每天、周限额每周一、月限额每月 1 日自动重置。</p>
+
+      <h2>支持流式输出吗？</h2>
+      <p>支持。在请求中设置 <code>"stream": true</code> 即可使用 SSE 流式输出。</p>
+
+      <h2>企业或团队能使用吗？</h2>
+      <p>可以。MAX 套餐更适合高强度开发和团队协作场景。管理员可以为不同用户分配不同的 API Key 和额度。</p>
+
+      <h2>数据安全吗？</h2>
+      <p>LemonFly 作为中转网关，不存储你的对话内容。所有请求实时转发到上游模型服务。</p>
+    </div>
+
+  </main>
+</div>
+
+<script>
+(function() {
+  var root = document.documentElement;
+
+  // Theme
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    localStorage.setItem('lemonfly-docs-theme', theme);
+    document.querySelector('.sun-icon').style.display = theme === 'dark' ? 'none' : 'block';
+    document.querySelector('.moon-icon').style.display = theme === 'dark' ? 'block' : 'none';
+  }
+  window.toggleTheme = function() {
+    applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
+  };
+  applyTheme(localStorage.getItem('lemonfly-docs-theme') || 'light');
+
+  // Sidebar
+  window.toggleSidebar = function() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.querySelector('.overlay').classList.toggle('open');
+  };
+
+  // Sections
+  window.showSection = function(id) {
+    document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+    document.querySelectorAll('.sidebar-link').forEach(function(l) { l.classList.remove('active'); });
+    var sec = document.getElementById('sec-' + id);
+    if (sec) sec.classList.add('active');
+    var link = document.querySelector('[data-section="' + id + '"]');
+    if (link) link.classList.add('active');
+    // Close mobile sidebar
+    document.getElementById('sidebar').classList.remove('open');
+    document.querySelector('.overlay').classList.remove('open');
+    // Scroll to top
+    window.scrollTo(0, 0);
+  };
+
+  // Hash navigation
+  var hash = location.hash.replace('#', '');
+  if (hash) showSection(hash);
+})();
+</script>
+
+</body>
+</html>
