@@ -111,6 +111,16 @@ backend/data/
 backend/config.yaml
 deploy/config.yaml
 backend/.installed
+data/config.yaml
+data/.installed
+data/model_pricing.json
+data/model_pricing.sha256
+
+# ===================
+# AI Agent 工具配置
+# ===================
+.agents/
+_bmad/
 
 # ===================
 # 其他
