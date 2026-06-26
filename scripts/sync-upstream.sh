@@ -50,7 +50,9 @@ echo ""
 echo "📦 Step 1: 暂存品牌补丁 ..."
 
 BRAND_FILES=(
+    "Dockerfile"
     "backend/internal/web/embed_on.go"
+    "frontend/pnpm-workspace.yaml"
     "frontend/tailwind.config.js"
     "frontend/src/components/layout/AuthLayout.vue"
     "frontend/src/views/HomeView.vue"
